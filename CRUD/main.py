@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 from tkcalendar import Calendar, DateEntry
 
 ################# cores ###############
@@ -57,24 +58,70 @@ edt_telefone.place(x=15, y=160)
 # Data da aula
 lbl_data = Label(frame_baixo, text='Data da Aula: ', anchor=NW, font=('Ivy 10 bold'), fg=co4, bg=co1, relief='flat')
 lbl_data.place(x=10, y=190)
-edt_data = Entry(frame_baixo, width=45, justify='left', relief='solid')
-edt_data.place(x=15, y=40)
+edt_data = DateEntry(frame_baixo, width=12, background='darkblue', foreground='white', borderwidth=2, year=2024, locale='pt_BR', date_pattern='dd/MM/yyyy')
+edt_data.place(x=15, y=220)
 
 # Finalidade
 lbl_nome = Label(frame_baixo, text='Finalidade: ', anchor=NW, font=('Ivy 10 bold'), fg=co4, bg=co1, relief='flat')
-lbl_nome.place(x=10, y=10)
-edt_nome = Entry(frame_baixo, width=45, justify='left', relief='solid')
-edt_nome.place(x=15, y=40)
+lbl_nome.place(x=160, y=190)
+edt_nome = Entry(frame_baixo, width=21, justify='left', relief='solid')
+edt_nome.place(x=160, y=220)
 
 # Observação
 lbl_nome = Label(frame_baixo, text='Observações: ', anchor=NW, font=('Ivy 10 bold'), fg=co4, bg=co1, relief='flat')
-lbl_nome.place(x=10, y=10)
+lbl_nome.place(x=15, y=260)
 edt_nome = Entry(frame_baixo, width=45, justify='left', relief='solid')
-edt_nome.place(x=15, y=40)
+edt_nome.place(x=15, y=290)
 
 
+'''Botões do CRUD'''
+# Inserir
+btn_inserir = Button(frame_baixo, text='Inserir', width=10, font=('Ivy 9 bold'), fg=co1, bg=co6, relief='raised', overrelief='ridge', cursor='')
+btn_inserir.place(x=15, y=340)
 
+# Atualizar
+btn_atualizar = Button(frame_baixo, text='Atualizar', width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='')
+btn_atualizar.place(x=112, y=340)
 
+# Deletar
+btn_deletar = Button(frame_baixo, text='Deletar', width=10, font=('Ivy 9 bold'), fg=co1, bg=co7, relief='raised', overrelief='ridge', cursor='')
+btn_deletar.place(x=210, y=340)
+
+'''  Frame da Grid '''
+lista = [[1, 'Teste Testando', 'teste@email.com', 123456789, "15/08/2024", 'Corrida', 'Treino ao ar livre'],
+         [2, 'Teste Testando 2', 'teste@email.com', 123456789, "15/08/2024", 'Corrida', 'Treino ao ar livre']]
+
+cabecalho_grid = ['ID', 'Nome', 'Email', 'Telefone', 'Data', 'Finalidade', 'Observações']
+
+# criando a tabela
+grid = ttk.Treeview(frame_direita, selectmode='extended', columns=cabecalho_grid, show='headings')
+
+# scroll vertical
+scroll_vert = ttk.Scrollbar(frame_direita, orient='vertical', command=grid.yview)
+
+# scroll horizontal
+scroll_hori = ttk.Scrollbar(frame_direita, orient='horizontal', command=grid.xview)
+
+grid.configure(yscrollcommand=scroll_vert.set, xscrollcommand=scroll_hori.set) # aplicando o scroll na configuração
+grid.grid(column=0, row=0, sticky='nsew')
+scroll_vert.grid(column=1, row=0, sticky='ns')
+scroll_hori.grid(column=0, row=1, sticky='ew')
+
+frame_direita.grid_rowconfigure(0, weight=12)
+
+hd=['nw','nw','nw','nw','nw','center','center'] #hd heder - sw = alinhados a esquerda
+h=[30,170,140,100,120,50,100] # representa o tamanho da tabelas
+n=0
+
+for coluna in cabecalho_grid:
+    grid.heading(coluna, text=coluna.title(), anchor=CENTER)
+
+    grid.column(coluna, width=h[n], anchor=hd[n])
+
+    n += 1
+
+for item in lista:
+    grid.insert('', 'end', values=item)
 
 
 janela.mainloop()

@@ -4,3 +4,4 @@
 # Bibliotecas usadas
  Tkinter
  tkcalendar - pip install tkcalendar
+ from tkinter import ttk para usar o Treeview (Grid)
