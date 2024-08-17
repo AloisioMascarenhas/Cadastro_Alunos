@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 from tkcalendar import Calendar, DateEntry
+from tkinter import messagebox
+# importando a view
+from view import *
 
 ################# cores ###############
 co0 = "#f0f3f5"  # Preta
@@ -35,6 +38,35 @@ frame_direita.grid(row=0, column=1, rowspan=2, padx=1, sticky=NSEW)
 app_nome = Label(frame_cima, text='Cadastro de Alunos', anchor=NW, font=('Ivy 13 bold'), fg=co1, bg=co2, relief='flat')
 app_nome.place(x=10, y=20)
 
+#Função Inserir
+def Inserir_form():
+    nome = edt_nome.get()
+    email = edt_email.get()
+    telefone = edt_telefone.get()
+    data = edt_data.get()
+    finalidade = edt_finalidade.get()
+    observacao = edt_obs.get()
+
+    lista = [nome, email, telefone, data, finalidade, observacao]
+
+    if nome == '':
+        messagebox.showinfo('Informação', 'Por favor, insira o nome do aluno(a)')
+    else:
+        inserir(lista) # função da view
+        messagebox.showinfo('Atenção', 'Dados inseridos com sucesso!')
+        edt_nome.delete(0, 'end')
+        edt_email.delete(0, 'end')
+        edt_telefone.delete(0, 'end')
+        edt_data.delete(0, 'end')
+        edt_finalidade.delete(0, 'end')
+        edt_obs.delete(0, 'end')
+
+    for widget in frame_direita.winfo_children():
+        widget.destroy()
+
+    mostrar_grid()
+
+
 #configurando frame baixo - Campos edits e labels
 
 # Nome do Aluno
@@ -62,21 +94,21 @@ edt_data = DateEntry(frame_baixo, width=12, background='darkblue', foreground='w
 edt_data.place(x=15, y=220)
 
 # Finalidade
-lbl_nome = Label(frame_baixo, text='Finalidade: ', anchor=NW, font=('Ivy 10 bold'), fg=co4, bg=co1, relief='flat')
-lbl_nome.place(x=160, y=190)
-edt_nome = Entry(frame_baixo, width=21, justify='left', relief='solid')
-edt_nome.place(x=160, y=220)
+lbl_finalidade = Label(frame_baixo, text='Finalidade: ', anchor=NW, font=('Ivy 10 bold'), fg=co4, bg=co1, relief='flat')
+lbl_finalidade.place(x=160, y=190)
+edt_finalidade = Entry(frame_baixo, width=21, justify='left', relief='solid')
+edt_finalidade.place(x=160, y=220)
 
 # Observação
-lbl_nome = Label(frame_baixo, text='Observações: ', anchor=NW, font=('Ivy 10 bold'), fg=co4, bg=co1, relief='flat')
-lbl_nome.place(x=15, y=260)
-edt_nome = Entry(frame_baixo, width=45, justify='left', relief='solid')
-edt_nome.place(x=15, y=290)
+lbl_obs = Label(frame_baixo, text='Observações: ', anchor=NW, font=('Ivy 10 bold'), fg=co4, bg=co1, relief='flat')
+lbl_obs.place(x=15, y=260)
+edt_obs = Entry(frame_baixo, width=45, justify='left', relief='solid')
+edt_obs.place(x=15, y=290)
 
 
 '''Botões do CRUD'''
 # Inserir
-btn_inserir = Button(frame_baixo, text='Inserir', width=10, font=('Ivy 9 bold'), fg=co1, bg=co6, relief='raised', overrelief='ridge', cursor='')
+btn_inserir = Button(frame_baixo, text='Inserir', command=Inserir_form, width=10, font=('Ivy 9 bold'), fg=co1, bg=co6, relief='raised', overrelief='ridge', cursor='')
 btn_inserir.place(x=15, y=340)
 
 # Atualizar
@@ -88,40 +120,42 @@ btn_deletar = Button(frame_baixo, text='Deletar', width=10, font=('Ivy 9 bold'),
 btn_deletar.place(x=210, y=340)
 
 '''  Frame da Grid '''
-lista = [[1, 'Teste Testando', 'teste@email.com', 123456789, "15/08/2024", 'Corrida', 'Treino ao ar livre'],
-         [2, 'Teste Testando 2', 'teste@email.com', 123456789, "15/08/2024", 'Corrida', 'Treino ao ar livre']]
+# função para mostrar a grid
+def mostrar_grid():
+    lista = buscar()
 
-cabecalho_grid = ['ID', 'Nome', 'Email', 'Telefone', 'Data', 'Finalidade', 'Observações']
+    cabecalho_grid = ['ID', 'Nome', 'Email', 'Telefone', 'Data', 'Finalidade', 'Observações']
 
-# criando a tabela
-grid = ttk.Treeview(frame_direita, selectmode='extended', columns=cabecalho_grid, show='headings')
+    # criando a tabela
+    grid = ttk.Treeview(frame_direita, selectmode='extended', columns=cabecalho_grid, show='headings')
 
-# scroll vertical
-scroll_vert = ttk.Scrollbar(frame_direita, orient='vertical', command=grid.yview)
+    # scroll vertical
+    scroll_vert = ttk.Scrollbar(frame_direita, orient='vertical', command=grid.yview)
 
-# scroll horizontal
-scroll_hori = ttk.Scrollbar(frame_direita, orient='horizontal', command=grid.xview)
+    # scroll horizontal
+    scroll_hori = ttk.Scrollbar(frame_direita, orient='horizontal', command=grid.xview)
 
-grid.configure(yscrollcommand=scroll_vert.set, xscrollcommand=scroll_hori.set) # aplicando o scroll na configuração
-grid.grid(column=0, row=0, sticky='nsew')
-scroll_vert.grid(column=1, row=0, sticky='ns')
-scroll_hori.grid(column=0, row=1, sticky='ew')
+    grid.configure(yscrollcommand=scroll_vert.set, xscrollcommand=scroll_hori.set) # aplicando o scroll na configuração
+    grid.grid(column=0, row=0, sticky='nsew')
+    scroll_vert.grid(column=1, row=0, sticky='ns')
+    scroll_hori.grid(column=0, row=1, sticky='ew')
 
-frame_direita.grid_rowconfigure(0, weight=12)
+    frame_direita.grid_rowconfigure(0, weight=12)
 
-hd=['nw','nw','nw','nw','nw','center','center'] #hd heder - sw = alinhados a esquerda
-h=[30,170,140,100,120,50,100] # representa o tamanho da tabelas
-n=0
+    hd=['nw','nw','nw','nw','nw','center','center'] #hd heder - sw = alinhados a esquerda
+    h=[30,170,140,100,120,50,100] # representa o tamanho da tabelas
+    n=0
 
-for coluna in cabecalho_grid:
-    grid.heading(coluna, text=coluna.title(), anchor=CENTER)
+    for coluna in cabecalho_grid:
+        grid.heading(coluna, text=coluna.title(), anchor=CENTER)
 
-    grid.column(coluna, width=h[n], anchor=hd[n])
+        grid.column(coluna, width=h[n], anchor=hd[n])
 
-    n += 1
+        n += 1
 
-for item in lista:
-    grid.insert('', 'end', values=item)
+    for item in lista:
+        grid.insert('', 'end', values=item) 
 
-
+# chamar a função para mostrar a Grid
+mostrar_grid()
 janela.mainloop()
