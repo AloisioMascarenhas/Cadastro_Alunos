@@ -1,5 +1,6 @@
 # Cadastro de Alunos
 ![Logo](https://img.icons8.com/ios-filled/50/000000/school.png)
+
  Formulário de Cadastro de Alunos em Python e SQlite - Trabalho de Extesão - Estacio de Sá
  Este é um projeto de uma aplicação de cadastro de alunos usando `Tkinter` para a interface gráfica e `SQLite` para o gerenciamento de banco de dados. O aplicativo permite inserir, atualizar e excluir registros de alunos, e exibir esses registros em uma tabela.
 
