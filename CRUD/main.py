@@ -17,12 +17,28 @@ co7 = "#ef5350"   # vermelha
 co8 = "#263238"   # + verde
 co9 = "#e9edf5"   # sky blue
 
+# Função para centralizar a janela
+def centralizar_janela(janela):
+    janela.update_idletasks()  # Atualiza as informações da janela
+    largura_janela = janela.winfo_width()
+    altura_janela = janela.winfo_height()
+    
+    largura_tela = janela.winfo_screenwidth()
+    altura_tela = janela.winfo_screenheight()
+    
+    x = (largura_tela // 2) - (largura_janela // 2)
+    y = (altura_tela // 2) - (altura_janela // 2)
+    
+    janela.geometry(f'{largura_janela}x{altura_janela}+{x}+{y}')
+
 # criando a janela 
 janela = Tk()
 janela.title('Trabalho de Extensão')
-janela.geometry('1100x455')
 janela.configure(background=co9)
 janela.resizable(width=False, height=False)
+janela.geometry('1100x455')
+
+centralizar_janela(janela)
 
 # dividindo a janela
 frame_cima = Frame(janela, width=310, height=50, bg=co2, relief='flat')
@@ -40,6 +56,15 @@ app_nome.place(x=10, y=20)
 
 global grid
 
+# Função para limpar os campos
+def limpar_campos():
+    edt_nome.delete(0, 'end')
+    edt_email.delete(0, 'end')
+    edt_telefone.delete(0, 'end')
+    edt_data.delete(0, 'end')
+    edt_finalidade.delete(0, 'end')
+    edt_obs.delete(0, 'end')
+
 #Função Inserir
 def Inserir_form():
     nome = edt_nome.get()
@@ -56,12 +81,7 @@ def Inserir_form():
     else:
         inserir(lista) # função da view
         messagebox.showinfo('Atenção', 'Dados inseridos com sucesso!')
-        edt_nome.delete(0, 'end')
-        edt_email.delete(0, 'end')
-        edt_telefone.delete(0, 'end')
-        edt_data.delete(0, 'end')
-        edt_finalidade.delete(0, 'end')
-        edt_obs.delete(0, 'end')
+        limpar_campos()
 
     for widget in frame_direita.winfo_children():
         widget.destroy()
@@ -76,13 +96,7 @@ def atualizar():
         grid_lista = grid_dicionario['values']
         
         valor_id = grid_lista[0]
-
-        edt_nome.delete(0, 'end')
-        edt_email.delete(0, 'end')
-        edt_telefone.delete(0, 'end')
-        edt_data.delete(0, 'end')
-        edt_finalidade.delete(0, 'end')
-        edt_obs.delete(0, 'end')
+        limpar_campos()
 
         edt_nome.insert(0, grid_lista[1])
         edt_email.insert(0, grid_lista[2])
@@ -106,12 +120,7 @@ def atualizar():
             else:
                 atualizar_informacao(lista) # função da view
                 messagebox.showinfo('Atenção', 'Dados atualizados com sucesso!')
-                edt_nome.delete(0, 'end')
-                edt_email.delete(0, 'end')
-                edt_telefone.delete(0, 'end')
-                edt_data.delete(0, 'end')
-                edt_finalidade.delete(0, 'end')
-                edt_obs.delete(0, 'end')
+                limpar_campos()
 
             for widget in frame_direita.winfo_children():
                 widget.destroy()
