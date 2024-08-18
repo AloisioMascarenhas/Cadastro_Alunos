@@ -116,7 +116,7 @@ def atualizar():
             lista = [nome, email, telefone, data, finalidade, observacao, valor_id]
 
             if nome == '':
-                messagebox.showinfo('Informação', 'Por favor, insira o nome do aluno(a)')
+                messagebox.showinfo('Atenção', 'Por favor, insira o nome do aluno(a)')
             else:
                 atualizar_informacao(lista) # função da view
                 messagebox.showinfo('Atenção', 'Dados atualizados com sucesso!')
