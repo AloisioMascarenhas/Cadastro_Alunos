@@ -1,0 +1,1 @@
+2024-08-17 21:37:51,620 - ERROR - Erro ao inserir dados: 'sqlite3.Cursor' object does not support the context manager protocol

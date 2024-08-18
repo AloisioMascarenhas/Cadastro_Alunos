@@ -20,7 +20,7 @@ co9 = "#e9edf5"   # sky blue
 # criando a janela 
 janela = Tk()
 janela.title('Trabalho de Extensão')
-janela.geometry('1043x455')
+janela.geometry('1100x455')
 janela.configure(background=co9)
 janela.resizable(width=False, height=False)
 
@@ -119,7 +119,7 @@ def atualizar():
             mostrar_grid()
 
         btn_confirmar = Button(frame_baixo, text='Confirmar', command=editar, width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='')
-        btn_confirmar.place(x=110, y=370)
+        btn_confirmar.place(x=112, y=370)
 
     except IndexError:
         messagebox.showerror('Atenção', 'Selecione um dos dados da tabela para atualizar!')
@@ -220,7 +220,7 @@ def mostrar_grid():
     frame_direita.grid_rowconfigure(0, weight=12)
 
     hd=['nw','nw','nw','nw','nw','center','center'] #hd heder - sw = alinhados a esquerda
-    h=[30,170,140,100,120,50,100] # representa o tamanho da tabelas
+    h=[30,170,140,100,100,100,122] # representa o tamanho da tabelas
     n=0
 
     for coluna in cabecalho_grid:
