@@ -28,15 +28,15 @@ def buscar():
     return lista
 
 # Alterar as informações
-lista = ['Aloisio', 1]
-with conexao:
-    cursor = conexao.cursor()
-    query = 'UPDATE formulario SET nome=? WHERE id=?'
-    cursor.execute(query,lista)
+def atualizar_informacao(i):
+    with conexao:
+        cursor = conexao.cursor()
+        query = 'UPDATE formulario SET nome=?, email=?, telefone=?, data_aula=?, finalidade=?, observacao=?  WHERE id=?'
+        cursor.execute(query, i)
 
 # Apagar informação
-lista = [1]
-with conexao:
-    cursor = conexao.cursor()
-    query = 'DELETE FROM formulario WHERE id=?'
-    cursor.execute(query, lista)
+def apagar_informacao(i):
+    with conexao:
+        cursor = conexao.cursor()
+        query = 'DELETE FROM formulario WHERE id=?'
+        cursor.execute(query, i)

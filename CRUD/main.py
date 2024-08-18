@@ -38,6 +38,8 @@ frame_direita.grid(row=0, column=1, rowspan=2, padx=1, sticky=NSEW)
 app_nome = Label(frame_cima, text='Cadastro de Alunos', anchor=NW, font=('Ivy 13 bold'), fg=co1, bg=co2, relief='flat')
 app_nome.place(x=10, y=20)
 
+global grid
+
 #Função Inserir
 def Inserir_form():
     nome = edt_nome.get()
@@ -66,6 +68,79 @@ def Inserir_form():
 
     mostrar_grid()
 
+# função para atualizar informação
+def atualizar():
+    try:
+        grid_dados = grid.focus()
+        grid_dicionario = grid.item(grid_dados)
+        grid_lista = grid_dicionario['values']
+        
+        valor_id = grid_lista[0]
+
+        edt_nome.delete(0, 'end')
+        edt_email.delete(0, 'end')
+        edt_telefone.delete(0, 'end')
+        edt_data.delete(0, 'end')
+        edt_finalidade.delete(0, 'end')
+        edt_obs.delete(0, 'end')
+
+        edt_nome.insert(0, grid_lista[1])
+        edt_email.insert(0, grid_lista[2])
+        edt_telefone.insert(0, grid_lista[3])
+        edt_data.insert(0, grid_lista[4])
+        edt_finalidade.insert(0, grid_lista[5])
+        edt_obs.insert(0, grid_lista[6])
+
+        def editar():
+            nome = edt_nome.get()
+            email = edt_email.get()
+            telefone = edt_telefone.get()
+            data = edt_data.get()
+            finalidade = edt_finalidade.get()
+            observacao = edt_obs.get()
+
+            lista = [nome, email, telefone, data, finalidade, observacao, valor_id]
+
+            if nome == '':
+                messagebox.showinfo('Informação', 'Por favor, insira o nome do aluno(a)')
+            else:
+                atualizar_informacao(lista) # função da view
+                messagebox.showinfo('Atenção', 'Dados atualizados com sucesso!')
+                edt_nome.delete(0, 'end')
+                edt_email.delete(0, 'end')
+                edt_telefone.delete(0, 'end')
+                edt_data.delete(0, 'end')
+                edt_finalidade.delete(0, 'end')
+                edt_obs.delete(0, 'end')
+
+            for widget in frame_direita.winfo_children():
+                widget.destroy()
+
+            mostrar_grid()
+
+        btn_confirmar = Button(frame_baixo, text='Confirmar', command=editar, width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='')
+        btn_confirmar.place(x=110, y=370)
+
+    except IndexError:
+        messagebox.showerror('Atenção', 'Selecione um dos dados da tabela para atualizar!')
+
+def deletar():
+    try:
+        grid_dados = grid.focus()
+        grid_dicionario = grid.item(grid_dados)
+        grid_lista = grid_dicionario['values']
+        
+        valor_id = [grid_lista[0]]
+
+        apagar_informacao(valor_id)
+        messagebox.showinfo('Atenção', 'Os dados foram apagados do Banco de Dados!')
+
+        for widget in frame_direita.winfo_children():
+            widget.destroy()
+
+        mostrar_grid()
+    except:
+        messagebox.showerror('Atenção', 'Selecione um dos dados da tabela para excluir!')
 
 #configurando frame baixo - Campos edits e labels
 
@@ -112,16 +187,18 @@ btn_inserir = Button(frame_baixo, text='Inserir', command=Inserir_form, width=10
 btn_inserir.place(x=15, y=340)
 
 # Atualizar
-btn_atualizar = Button(frame_baixo, text='Atualizar', width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='')
+btn_atualizar = Button(frame_baixo, text='Atualizar', command=atualizar, width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='')
 btn_atualizar.place(x=112, y=340)
 
 # Deletar
-btn_deletar = Button(frame_baixo, text='Deletar', width=10, font=('Ivy 9 bold'), fg=co1, bg=co7, relief='raised', overrelief='ridge', cursor='')
+btn_deletar = Button(frame_baixo, command=deletar, text='Deletar', width=10, font=('Ivy 9 bold'), fg=co1, bg=co7, relief='raised', overrelief='ridge', cursor='')
 btn_deletar.place(x=210, y=340)
 
 '''  Frame da Grid '''
 # função para mostrar a grid
 def mostrar_grid():
+    global grid
+
     lista = buscar()
 
     cabecalho_grid = ['ID', 'Nome', 'Email', 'Telefone', 'Data', 'Finalidade', 'Observações']
@@ -155,6 +232,7 @@ def mostrar_grid():
 
     for item in lista:
         grid.insert('', 'end', values=item) 
+
 
 # chamar a função para mostrar a Grid
 mostrar_grid()
