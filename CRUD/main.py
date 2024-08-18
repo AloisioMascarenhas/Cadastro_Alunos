@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from tkcalendar import Calendar, DateEntry
+from tkcalendar import DateEntry
 from tkinter import messagebox
 # importando a view
 from view import *
@@ -127,7 +127,7 @@ def atualizar():
 
             mostrar_grid()
 
-        btn_confirmar = Button(frame_baixo, text='Confirmar', command=editar, width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='')
+        btn_confirmar = Button(frame_baixo, text='Confirmar', command=editar, width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='hand2')
         btn_confirmar.place(x=112, y=370)
 
     except IndexError:
@@ -192,21 +192,26 @@ edt_obs.place(x=15, y=290)
 
 '''Botões do CRUD'''
 # Inserir
-btn_inserir = Button(frame_baixo, text='Inserir', command=Inserir_form, width=10, font=('Ivy 9 bold'), fg=co1, bg=co6, relief='raised', overrelief='ridge', cursor='')
+btn_inserir = Button(frame_baixo, text='Inserir', command=Inserir_form, width=10, font=('Ivy 9 bold'), fg=co1, bg=co6, relief='raised', overrelief='ridge', cursor='hand2')
 btn_inserir.place(x=15, y=340)
 
 # Atualizar
-btn_atualizar = Button(frame_baixo, text='Atualizar', command=atualizar, width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='')
+btn_atualizar = Button(frame_baixo, text='Atualizar', command=atualizar, width=10, font=('Ivy 9 bold'), fg=co1, bg=co2, relief='raised', overrelief='ridge', cursor='hand2')
 btn_atualizar.place(x=112, y=340)
 
 # Deletar
-btn_deletar = Button(frame_baixo, command=deletar, text='Deletar', width=10, font=('Ivy 9 bold'), fg=co1, bg=co7, relief='raised', overrelief='ridge', cursor='')
+btn_deletar = Button(frame_baixo, command=deletar, text='Deletar', width=10, font=('Ivy 9 bold'), fg=co1, bg=co7, relief='raised', overrelief='ridge', cursor='hand2')
 btn_deletar.place(x=210, y=340)
 
 '''  Frame da Grid '''
 # função para mostrar a grid
 def mostrar_grid():
     global grid
+
+    # Estilo
+    style = ttk.Style()
+    style.configure("Treeview.Heading", font=('Ivy', 9, 'bold'))
+    style.configure("Treeview", background="#F0F0F0", foreground="black", rowheight=25, fieldbackground="#F0F0F0")
 
     lista = buscar()
 
@@ -228,7 +233,7 @@ def mostrar_grid():
 
     frame_direita.grid_rowconfigure(0, weight=12)
 
-    hd=['nw','nw','nw','nw','nw','center','center'] #hd heder - sw = alinhados a esquerda
+    hd=['center','center','center','center','center','center','center'] #hd heder - sw = alinhados a esquerda
     h=[30,170,140,100,100,100,122] # representa o tamanho da tabelas
     n=0
 
@@ -244,5 +249,6 @@ def mostrar_grid():
 
 
 # chamar a função para mostrar a Grid
+
 mostrar_grid()
 janela.mainloop()
