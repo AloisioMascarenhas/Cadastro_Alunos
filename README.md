@@ -63,3 +63,9 @@ Este arquivo contém funções para manipulação dos dados no banco de dados SQ
 4. **Excluir Dados**:
    - Selecione um registro na tabela e clique em "Deletar".
 
+![Fluxograma do Projeto](img/fluxograma_cadastro_alunos.png)
+
+
+![Mapa Mental do Projeto](img/mapaMental_Cadastro_Alunospng)
+
+
