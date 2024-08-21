@@ -65,7 +65,7 @@ Este arquivo contém funções para manipulação dos dados no banco de dados SQ
 
 ##  Fluxograma
 !([image.png](https://icons8.com/icon/5tOSXT4yaBwC/flow-chart))
-![Fluxograma do Projeto](img/fluxograma_cadastro_alunos.png)
+
 
 ## Mapa Mental
 ![Mapa Mental do Projeto](img/mapaMental_Cadastro_Alunospng)
