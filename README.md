@@ -69,4 +69,7 @@ Este arquivo contém funções para manipulação dos dados no banco de dados SQ
 ## Mapa Mental 🧠
 ![Mapa Mental do Projeto](img/mapaMental_Cadastro_Alunospng)
 
+## Print da Tela 📝
+![tela](img/print_tela.png)
+
 
